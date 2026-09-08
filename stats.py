@@ -1,35 +1,26 @@
-def get_num_words(string):
-  chars = string.split()
-  return len(chars)
+def get_num_words(text: str) -> int:
+    words = text.split()
+    return len(words)
 
-def get_times_chars(string):
-  chars_list = string.split()
-  chars = {}
 
-  for word in chars_list:
-    for char in word.lower():
-      if char in chars:
-        chars[char] += 1
-      
-      if char not in chars:
-        chars[char] = 1 
-  
-  return chars
-  
-def sort_on(items):
-    return items["num"]
+def get_chars_dict(text: str) -> dict[str, int]:
+    chars = {}
+    for c in text:
+        lowered = c.lower()
+        if lowered in chars:
+            chars[lowered] += 1
+        else:
+            chars[lowered] = 1
+    return chars
 
-def sorted_chars(chars):
-  new_array = chars.items()
-  new_array_list = []
 
-  for item in new_array:
-    if (item[0].isalpha()):
-      map_prop = item[0]
-      map_key = item[1]
-      new_map = {"char": map_prop, "num": map_key}
-      new_array_list.append(new_map)
-      
-      new_array_list.sort(reverse=True, key=sort_on)
+def sort_on(char_count: tuple[str, int]) -> int:
+    return char_count[1]
 
-  return new_array_list
+
+def chars_dict_to_sorted_list(num_chars_dict: dict[str, int]) -> list[tuple[str, int]]:
+    chars_list: list[tuple[str, int]] = []
+    for char in num_chars_dict:
+        count = num_chars_dict[char]
+        chars_list.append((char, count))
+    return sorted(chars_list, reverse=True, key=sort_on)
